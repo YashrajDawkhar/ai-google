@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Google Project Index</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Orbitron:wght@400;700&display=swap');
+
+        :root {
+            --bg-color: #0a0f1e;
+            --primary-color: #1a2238;
+            --secondary-color: #2a3a5e;
+            --accent-color: #ff6700;
+            --highlight-color: #4cc9f0;
+            --text-color: #e0e0e0;
+            --text-muted: #a0a0a0;
+            --success-color: #00f5d4;
+            --font-primary: 'Poppins', sans-serif;
+            --font-display: 'Orbitron', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-primary);
+            background: linear-gradient(135deg, var(--bg-color) 0%, #0d1421 50%, var(--primary-color) 100%);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(255, 103, 0, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(76, 201, 240, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(0, 245, 212, 0.05) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .container {
+            background: rgba(26, 34, 56, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 103, 0, 0.2);
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.3),
+                0 0 0 1px rgba(255, 103, 0, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            position: relative;
+            z-index: 1;
+            max-width: 600px;
+            width: 100%;
+        }
+
+        h1 {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, var(--accent-color), var(--highlight-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(255, 103, 0, 0.3);
+            position: relative;
+        }
+
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
+            border-radius: 2px;
+        }
+
+        .project-grid {
+            display: grid;
+            gap: 1.5rem;
+            list-style: none;
+            margin-top: 2rem;
+        }
+
+        .project-card {
+            background: linear-gradient(135deg, rgba(42, 58, 94, 0.6), rgba(26, 34, 56, 0.8));
+            border: 1px solid rgba(255, 103, 0, 0.2);
+            border-radius: 15px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 103, 0, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .project-card:hover::before {
+            left: 100%;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-color);
+            box-shadow: 
+                0 10px 30px rgba(255, 103, 0, 0.2),
+                0 0 0 1px rgba(255, 103, 0, 0.3);
+        }
+
+        .project-link {
+            text-decoration: none;
+            color: var(--text-color);
+            display: block;
+            position: relative;
+            z-index: 2;
+        }
+
+        .project-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--highlight-color);
+        }
+
+        .project-description {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .project-number {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-family: var(--font-display);
+            font-size: 2rem;
+            font-weight: 700;
+            color: rgba(255, 103, 0, 0.3);
+            z-index: 1;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-color);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent-color);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ff8533;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+            
+            .container {
+                padding: 2rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .project-card {
+                padding: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>AI Google Project Index</h1>
+        <ul class="project-grid">
+            <li class="project-card">
+                <div class="project-number">01</div>
+                <a href="pro-1.html" class="project-link">
+                    <div class="project-title">Market Transformation Analysis</div>
+                    <div class="project-description">India's Decadal Shift: A comprehensive market transformation analysis covering the period 2015-2025</div>
+                </a>
+            </li>
+            <li class="project-card">
+                <div class="project-number">02</div>
+                <a href="pro-2.html" class="project-link">
+                    <div class="project-title">Interactive Dashboard</div>
+                    <div class="project-description">Dynamic visualization dashboard with advanced animations and interactive elements for data exploration</div>
+                </a>
+            </li>
+            <li class="project-card">
+                <div class="project-number">03</div>
+                <a href="pro-3.html" class="project-link">
+                    <div class="project-title">Data Analytics Platform</div>
+                    <div class="project-description">Comprehensive analytics platform featuring charts, metrics, and insights for market transformation data</div>
+                </a>
+            </li>
+        </ul>
+    </div>
+</body>
+</html>
